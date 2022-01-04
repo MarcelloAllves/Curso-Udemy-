@@ -1,0 +1,131 @@
+----------------@Configuration e @Beans---------------
+Como fazer configurações do Spring Boot
+Podemos customizar ou fazer alguma configuração através do @configuration ou @beans.
+Dentro do pacote Application criaremos um novo pacote com o nome Configuration e dentro desse pacote ,
+criaremos uma classe que terá nossas configurações:
+package Application.Configuration;
+
+public class WebConfiguration{
+    
+}
+
+O nome dessa classe pode ser de acordo com a configuração que estamos realizando, ou seja,
+se estamos configurando um banco de dados podemos dar o nome a classe de dataBaseConfiguration, se for uma configuração
+de segurança pode ser securiryConfiguration, e por ai vai.
+
+Por exemplo, temos uma configuração onde temos o nome da aplicação estático. 
+Esse nome da aplicação ele pode ser utilizado onde quisermos. Vamos supor que você precise passar o nome da aplicação,
+sua versão ou qualquer outra informação para toda a aplicação, podemos criar uma configuração nessa classe que carrega 
+esses dados e estar utilizando onde quisermos.
+Então dentro da classe de Config criaremos a anotação @Configuration, logo após fazer a importação do pacote
+org.springframework.context.annotation.Configuration.
+Dessa forma nossa classe ficará assim:
+
+package Application.Configuration;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class WebConfiguration{
+
+}
+
+Quando anotamos essa classe com o @Configuration, essa classe passa a ser escanado pelo Spring Boot, que por sua vez vai
+aplicar todas as configurações no nosso projeto. 
+@Configuration é uma anotação de nível de classe indicando que um objeto é uma fonte de definições de bean. 
+@Configuration classes declaram beans por meio de anotações @Bean nos métodos. 
+Chamadas para @Bean métods em classes @Configuration também podem ser usadas para definir dependências entre beans.
+O Spring Boot favorece a configuração baseada em Java. 
+Embora seja possível usar o SpringApplication com fontes XML, a comunidade spring boot geralmente recomenda que nossa 
+fonte principal seja uma única @Configuration classe. 
+Normalmente, a classe que define o método principal é um bom candidato como o @Configurationprimário.
+
+Dentro da classe WebConfiguration, criaremos um @bean. A anotação do Spring diz que um método produz um bean 
+a ser gerenciado pelo recipiente do Spring. É uma anotação de nível de método. 
+Durante a configuração Java (), o método é executado e seu valor de retorno é registrado como um bean dentro de um 
+@Bean@ConfigurationBeanFactory.
+Dessa forma nossa classe ficará assim:
+
+package Application.Configuration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class WebConfiguration {
+
+    @Bean
+    public String applicationName(){
+        return "Sistemas de Vendas.";
+    }
+}
+
+Dessa forma, estamos dizendo aqui para o Spring Boot crie esse objeto do tipo String com esse valor no contexto da 
+aplicação para que possamos utilizá-lo onde precisarmos.
+Esta é uma configuração simples, mas poderiamos estar fazendo por exemplo uma configuração de conexão com base de dados 
+configuração de e-mail e por aí vai.
+Então utilizaremos agora essa configuração aqui no nosso Hello World, que ao invés de utilizarmos o retorno da nossa classe
+VendasApplication, utilizaremos essa nossa configuração da classe WebConfiguration como retorno para nossa aplicação.
+Para isso, criaremos duas novas anotações @Autowired e @Qualifier dentro da classe VendasApplication acima da 
+anotação @GetMapping, e uma variável do Tipo String com o nome applicationName, esse mesmo nome será atribuído em nosso 
+@Bean declarado na classe WebConfiguration.
+Dessa forma nossas classes ficarão assim:
+
+package Application;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+@RestController
+
+public class VendasApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(VendasApplication.class, args);
+    }
+
+    @Autowired
+    @Qualifier("applicationName")
+    private String applicationName;
+    
+    @GetMapping("/helloWord")
+    public String helloWord(){
+        return applicationName;
+    }
+
+}
+
+
+package Application.Configuration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class WebConfiguration {
+
+    @Bean(name ="applicationName")
+    public String applicationName(){
+        return "Sistemas de Vendas.";
+    }
+}
+
+
+No Spring Boot, a anotação @Autowired é usada para injeção de dependência. 
+Na aplicação de inicialização do Spring Boot, todos os beans carregados são elegíveis para escrita automática 
+para outro bean.
+A anotação @Autowired no Spring Boot é usada para conectar automaticamente um bean em outro bean.
+A anotação @Autowired ajuda a conectar automaticamente os beans colaborativos na estrutura do Spring Boot.
+
+Para testarmos se nossa configuração está funcionando iremos executar nosso projeto na IDE, depois no browser iremos 
+pesquisar pelo enderço http//localhost:8080/helloWord.
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+------------Spring Boot Starters
+	Como funciona o Spring Boot
+
+Através de algumas configurações/declarações simples feita dentro do pom.xml do projeto e com criações de alguns métodos
+com algumas @anotattion já conseguimos utilizar o Spring Boot.
+
+Antigamente para fazer isso no Java era necessário muito arquivos de configuração, xml,TomCatch um servidor externo 
+para a gente rodar aplicação, mas com Spring Boot precisamos criar uma classe e colocar as configurações e dependências 
+no pom.xml, e já funcionou.
+
+Isso aconteceu porque o Spring Boot já configura automaticamente tudo isso pra gente. À medida que a gente vai adicionando 
+os Starters.
+O que são esses Starters?
+
+Ao criar o projeto nós adicionamos a tag parent no pom.xml:
+ <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.1</version>
+    </parent>
+
+Esse aqui é o Starter do template do Spring Boot que tem todas as configurações e todas as dependências 
+básicas para o Spring Boot funcionar.
+
+E a gente vai só adicionando os módulos que interessam a gente que interessa na nossa aplicação. Isso evita que a gente
+esteja colocando várias dependências que não vão servir de nada para a nossa aplicação e fica acumulando um espaço na 
+aplicação.
+
+Então o Starter é basicamente um módulo, uma dependência que engloba várias outras dependências que vem com Classes de 
+configuração. Por exemplo: 
+	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+Esse é o Starter padrão do Spring Boot, sem ele o Spring Boot não funciona, esse aqui está o Start básico.
+
+Sem ele nós não temos essa Annotation @SpringBootApplication declarada na classe VendasApplication.
+Não temos o SpringApplication chamado dentro do método main, para inicializar nossa aplicação Spring Boot.
+
+Você pode ver (no pom.xml), que ele segue a mesma convenção dos outros Starters que tem o spring-boot-starter.
+Aqui spring-boot-starter-web, segue toda essa mesma convenção aqui, então se quisermos utilizar outros módulos, 
+como o módulo de acessar dados, o módulo de segurança que é o Spring Security e dentre outros.
+Basta adicionar o módulo que iremos precisar.
+
+No caso pra eu podermos acessar do browser o nosso Hello World, precisamos adicionar Starter Web, porque é ele que faz 
+com que a gente consiga criar web-services, Rest API, aplicações web utilizando Spring Boot, então cada 
+Starter tem uma série de configurações que vêm junto com ele que já rodam assim que você sobe a aplicação.
+
+Então, não precisamos fazer muitas configurações. Só vai fazer algumas poucas customizações caso necessário.
+
+Alguns outros exemplos de Starters, reforçando que todos os Starters começa com spring-boot-starter que vem do pacote do 
+<groupId>org.springframework.boot</groupId>: 
+<!-- starter web -->
+	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+<!-- starter data -->
+	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+<!-- starter security-->
+	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+<!-- starter test -->
+	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+Esses são os principais Starters utilizados, o <artifactId>spring-boot-starter-data-jpa</artifactId> tem classes que 
+fazem operações com bases de dados.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
